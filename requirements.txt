@@ -1,0 +1,7 @@
+flask
+
+flask-bootstrap
+
+flask-pymongo
+
+flask-moment

@@ -1,0 +1,342 @@
+{% extends 'layout.html' %}
+{% block title %}
+<title>Login System</title>
+{% endblock %}
+{% block head %}
+{{super()}}
+{{moment.include_moment()}}
+{% endblock %}
+
+{% block content %}
+<style>
+    .left-division{
+        background-size:100%;
+        background-color: rgba(226, 233, 243);
+        vertical-align: top;
+        min-height: 100%;
+        height:400px;
+
+    }
+    .middle-division{
+        background-size:100%;
+        background-color: rgba(241, 244, 249);
+        vertical-align: top;
+        min-height: 100%;
+        height:400px;
+    }
+    .right-division{
+        background-size:100%;
+        background-color: rgba(226, 233, 243);
+        vertical-align: top;
+        min-height: 100%;
+        height:400px;
+    }
+    .search-bar{
+        background-color: rgba(217, 217, 217);
+        /*width:200px;*/
+        height:40px;
+        border-radius:5px;
+
+    }
+    .comment-label{
+        background-color: rgba(0,0,139);
+    }
+    .add-comment{
+        background-color: rgba(167, 203, 242);
+    }
+    .comment-box{
+        background-color: rgba(226, 233, 243);
+    }
+    .big-post-bg{
+        background-color: rgba(233, 239, 247);
+    }
+    input:focus{
+        background-color: rgba(186, 219, 255)  !important;
+    }
+    .navigation{
+        background-color: rgba(218, 230, 245);
+
+    }
+    .navigation-selection{
+        background-color: rgba(0,0,139);
+    }
+    .material-icons.md-24 { font-size: 24px; }
+    .fs-15{
+        font-size:15px;
+    }
+    .fs-16{
+        font-size:16px;
+    }
+    .fs-20{
+        font-size:20px;
+    }
+    .light-gray-text{
+        color:#8b95a6;
+    }
+    .periwinkle-text{
+        color:#739dc9;
+    }
+    .navy-blue-text{
+        color:#4a6287;
+    }
+
+
+
+</style>
+
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <div class="col-0 col-md-3  h-100 left-division ">
+            <div class="search-bar mx-3 mb-2 mt-3 row justify-content-right pr-4">
+<!--                <i class="fa fa-search fa-lg mr-2 ml-2" style="line-height:1.75; border-radius:5px;"></i>-->
+                <span class="material-icons mr-1 ml-2" style="line-height:1.75;">search</span>
+                <h6 class="text-dark pl-1 pr-2 pt-2 pb-2 mb-0 " style="line-height:1.75; border-radius:5px;">Search</h6>
+            </div>
+
+
+            <h5 class="p-3 text-secondary">Your Groups</h5>
+            {% for group in session['user-info']['groups'] %}
+                <div class="pl-3 pb-3 d-flex">
+                    <img src="https://images.unsplash.com/photo-1594882471743-2758d2ce5f00?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG90dXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                         class="rounded-circle img-fluid " alt="50x50" style="width:55px; height:50px;">
+                    <h6 class="fs-15 pl-3 pt-3 text-dark font-weight-bold">Yoga Community</h6>
+                </div>
+            {% else %}
+                <h6 class="fs-15 pl-3 mb-3 text-dark font-weight-bold">No groups found</h6>
+            {% endfor %}
+            <h5 class="p-3 text-secondary">Your Friends</h5>
+            {% for group in session['user-info']['friends'] %}
+                <div class="pl-3 pb-3 d-flex align-items-center justify-content-between">
+                    <div class="d-flex">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                             class="rounded-circle img-fluid" alt="50x50" style="width:55px; height:50px;">
+                        <h6 class="fs-15 pl-3 pt-3 pr-5 text-dark font-weight-bold">Nancy</h6>
+                    </div>
+                    <div class="row justify-content-right pr-4">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6o6T_z7S3Hqkwx96hCGkY5iZR1VbeHc2772U2SMhQOKnLZBp0WeRkVTfXr0GSvenXAQU&usqp=CAU"
+                             class="rounded-circle active " alt="50x50" style="width:15px; height:15px;">
+                    </div>
+                </div>
+            {% else %}
+                <h6 class="fs-15 pl-3 mb-3 text-dark font-weight-bold">No friends found</h6>
+            {% endfor %}
+<!--            <div class="pl-3 pb-3 d-flex align-items-center justify-content-between">-->
+<!--                <div class="d-flex">-->
+<!--                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"-->
+<!--                         class="rounded-circle img-fluid" alt="50x50" style="width:55px; height:50px;">-->
+<!--                    <h6 class="fs-15 pl-3 pt-3 pr-5 text-dark font-weight-bold">Nancy</h6>-->
+<!--                </div>-->
+<!--                <div class="row justify-content-right pr-4">-->
+<!--                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6o6T_z7S3Hqkwx96hCGkY5iZR1VbeHc2772U2SMhQOKnLZBp0WeRkVTfXr0GSvenXAQU&usqp=CAU"-->
+<!--                         class="rounded-circle active " alt="50x50" style="width:15px; height:15px;">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="pl-3 pb-3 d-flex align-items-center justify-content-between">-->
+<!--                <div class="d-flex">-->
+<!--                    <img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"-->
+<!--                         class="rounded-circle img-fluid" alt="50x50" style="width:55px; height:50px;">-->
+<!--                    <h6 class="fs-15 pl-3 pt-3 text-dark font-weight-bold">Joseph</h6>-->
+<!--                </div>-->
+<!--                <h6 class="row justify-content-right text-secondary pt-3 pr-4">11 min</h6>-->
+<!--            </div>-->
+<!--            <div class="pl-3 pb-3 d-flex align-items-center justify-content-between">-->
+<!--                <div class="d-flex">-->
+<!--                    <img src="https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHBlcnNvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"-->
+<!--                         class="rounded-circle img-fluid" alt="50x50" style="width:55px; height:50px;">-->
+<!--                    <h6 class="fs-15 pl-3 pt-3 text-dark font-weight-bold">Sophia</h6>-->
+<!--                </div>-->
+<!--                <h6 class="row justify-content-right text-secondary pt-3 pr-4">24 min</h6>-->
+<!--            </div>-->
+
+
+        </div>
+
+        <div class="col-0 col-md-6  h-100 middle-division">
+            <div class="square square-lg navigation row justify-content-center mb-4 mt-2 mx-5"
+                 style=" border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-right-radius:10px; border-bottom-left-radius:10px;">
+                <div class=" py-0 px-2 " style=" width:100%; ">
+                    <div class="d-flex align-items-center pt-3 justify-content-center mb-3">
+                        <div class="square square-lg  mr-3 p-0" style="width:auto; border-radius:10px;">
+<!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <span class="material-icons m-2 md-light md-24" style=" color:#8b95a6;">home</span>
+                        </div>
+                        <div class="square square-lg navigation-selection mr-3 p-0" style="width:auto; border-radius:10px;">
+<!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <span class="material-icons m-2 md-dark md-24" style=" color:#8b95a6;">add</span>
+                        </div>
+
+                        <div class="square square-lg  mr-3 p-0" style="width:auto; border-radius:10px;">
+<!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <span class="material-icons m-2 md-dark md-24" style=" color:#8b95a6;">settings</span>
+                        </div>
+<!--                        <i class="fa fa-comment fa-lg mr-4" style="color:#4c5769;"></i>-->
+<!--                        <i class="fa fa-heart fa-lg mr-4" style="color:#4c5769;"></i>-->
+<!--                        <i class="fa fa-gear fa-lg mr-4" style="color:#4c5769;"></i>-->
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="d-flex " style=" overflow-x:scroll;">
+                {% for story in range(0,20,1) %}
+                    <div class=" pb-3 px-3 d-flex flex-column align-items-center justify-content-center"  >
+                        <img src="https://media.istockphoto.com/photos/learn-to-love-yourself-first-picture-id1291208214?b=1&k=20&m=1291208214&s=170667a&w=0&h=sAq9SonSuefj3d4WKy4KzJvUiLERXge9VgZO-oqKUOo="
+                            class="rounded-circle  border border-primary" alt="50x50" style="width:55px; height:50px;">
+                        <h6 class="fs-16 pt-3 text-dark font-weight-bold">Tvisha</h6>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="big-post-bg square square-lg  ml-3 d-flex" style="width:640px; height:335px; border-radius:15px;">
+                <div class="col-6 square square-lg">
+                    <img src="https://t3.ftcdn.net/jpg/03/76/44/02/360_F_376440225_QjOu6mr0qX0bT271GstBYRKfXtwt6jnM.jpg"
+                         class="w-h-50 mt-3 ml-1" alt="..." style="width:300px; height:300px; border-radius:10px;">
+                </div>
+                <div class="col-6 mt-3 ml-1 ">
+                    <div class="row justify-content-between pr-3 align-items-center">
+                        <div class="col-auto">
+
+                            <h5 class="fs-20 pt-3  mb-0 text-dark font-weight-bold">Join our free webinar!</h5>
+                        </div>
+                        <div class="col  ">
+
+                            <img src="https://i.pinimg.com/236x/55/30/42/553042017713ddf3e8d3e419bb3987f5.jpg"
+                             class="rounded-circle active ml-1" alt="50x50" style="width:6px; height:6px;">
+                            <img src="https://i.pinimg.com/236x/55/30/42/553042017713ddf3e8d3e419bb3987f5.jpg"
+                             class="rounded-circle active ml-1" alt="50x50" style="width:6px; height:6px;">
+                            <img src="https://i.pinimg.com/236x/55/30/42/553042017713ddf3e8d3e419bb3987f5.jpg"
+                             class="rounded-circle active ml-1" alt="50x50" style="width:6px; height:6px;">
+
+                        </div>
+                    </div>
+                    <div>
+                        <h6 class="pl-1 pt-1 pb-2 pr-5 navy-blue-text "> Thursday 10 AM ┃ June 18th</h6>
+                    </div>
+                    <div>
+                        <h6 class="light-gray-text pl-1 pt-1 pr-5 pb-3"><small> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h6>
+                    </div>
+                     <div class="pl-1 pb-2 align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHBlcnNvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                                         class="rounded-circle img-fluid" alt="50x50" style="width:35px; height:30px;">
+                                    <div class="align-items-vertical">
+                                        <h6 class="periwinkle-text fs-16 pl-2 mb-0  font-weight-bold">Sophia</h6>
+                                        <h6 class="navy-blue-text row justify-content-right mb-0 pr-4 pl-4"><small>Insert Bio Here</small></h6>
+                                    </div>
+                                </div>
+
+                     </div>
+                    <div class="d-flex justify-content-end pt-3  mb-3">
+                        <div class="square square-lg  mb-0 ml-2 mr-2 p-0 d-flex align-items-center" style="width:auto; border-radius:10px;">
+<!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <span class="material-icons m-1 md-dark md-24" style=" color:#739dc9;">favorite_border</span>
+                            <h6 class=" mb-0">81</h6>
+                        </div>
+                        <div class="square square-lg  mb-0 ml-2 mr-3 p-0 d-flex align-items-center" style="width:auto; border-radius:10px;">
+<!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <span class="material-icons m-1 md-dark md-24" style=" color:#739dc9;">share</span>
+                            <h6 class=" mb-0">67</h6>
+                        </div>
+
+
+
+<!--                        <i class="fa fa-comment fa-lg mr-4" style="color:#4c5769;"></i>-->
+<!--                        <i class="fa fa-heart fa-lg mr-4" style="color:#4c5769;"></i>-->
+<!--                        <i class="fa fa-gear fa-lg mr-4" style="color:#4c5769;"></i>-->
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-0 col-md-3 h-100 right-division">
+
+            <!--                <i class="fa fa-bell fa-lg "></i>-->
+            <div class="d-flex align-items-center pt-3 justify-content-end mb-3">
+                <i class="fa fa-bell fa-lg mr-0"></i>
+
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle pl-3 pr-3 text-dark font-weight-bold" type="button"
+                            id="dropdownMenu2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{session['user-info']['firstName']}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item text-break" type="button">My Profile</button>
+                        <button class="dropdown-item text-break" type="button">Settings</button>
+                        <a href="/logout"><button class="dropdown-item text-break" type="button">Logout</button></a>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                     class="rounded-circle img-fluid" alt="50x50" style="width:45px; height:40px;">
+            </div>
+
+            <div class="" style="position:relative;">
+                <div class="square square-lg mb-2">
+                    <img src="https://t3.ftcdn.net/jpg/03/76/44/02/360_F_376440225_QjOu6mr0qX0bT271GstBYRKfXtwt6jnM.jpg"
+                         class="w-h-50" alt="..." style="width:320px; height:300px; border-radius:10px;">
+                </div>
+                <div class="mt-1 py-1 px-2 " style="position:absolute; bottom:280px; width:100%; ">
+                    <!--                    <i class="fa fa-bell fa-lg mr-2"></i>-->
+                    <div class="comment-label py-2 d-flex align-items-center" style="border-radius:7px;">
+                        <i class="fa fa-comment fa-lg mr-2 pl-3 mb-0" style="color:white;"></i>
+                        <div class="text-light pl-0 mb-0">Comments</div>
+
+                    </div>
+                </div>
+                <div>
+                    <div class="square square-lg bg-light pt-3"
+                         style="width:320px; height:250px; border-top-left-radius:10px; border-top-right-radius:10px; border-bottom-right-radius:0px; border-bottom-left-radius:0px; overflow:scroll;">
+                        <!--                <img src="https://t3.ftcdn.net/jpg/03/76/44/02/360_F_376440225_QjOu6mr0qX0bT271GstBYRKfXtwt6jnM.jpg" class="w-h-50" alt="..." style="width:320px; height:250px; border-radius:10px;">-->
+                        {% for comment in range(0,4,1) %}
+                        <div class="comment-box p-2 mx-auto mt-2" style="border-radius:7px; width:80%;">
+                            <div class="pl-2 pb-2 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                                         class="rounded-circle img-fluid" alt="50x50" style="width:35px; height:30px;">
+                                    <h6 class="fs-16 pl-2 mb-0 text-dark font-weight-bold">Joseph</h6>
+                                </div>
+                                <h6 class="row justify-content-right mb-0 pr-4"><small>11 min</small></h6>
+                            </div>
+                            <h6 class="pl-5 pr-2">Wow!! That sounds so interesting!</h6>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="square square-lg bg-light "
+                         style="width:320px; border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-right-radius:10px; border-bottom-left-radius:10px;">
+                        <div class=" py-1 px-2 " style=" width:100%; ">
+
+                            <div class="input-group">
+                                <input type="text" class="form-control add-comment" placeholder="Add a Comment"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append ">
+                                    <span class="input-group-text " id="basic-addon2"><i
+                                            class="fa fa-send fa-lg  mb-0 " style="color:#a7cbf2;"></i></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--    <form method="POST" class="buy-panel flex-fill">-->
+<!--        <div class="row p-4 m-4" style="position:relative;">-->
+<!--            <textarea name="content" type="text"  class=" mb-1 form-control"></textarea>-->
+<!--            <button class=" mt-1 btn btn-light py-1" style="position:absolute; left:27px; top:45px;">Save</button>-->
+<!--        </div>-->
+
+<!--    </form>-->
+
+
+<!--    <div class="container text-center">-->
+<!--        {% for message in get_flashed_messages() %}-->
+<!--            <p>{{message}}</p>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+
+
+{% endblock %}
