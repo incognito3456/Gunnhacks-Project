@@ -197,7 +197,7 @@
                 {% for story in stories %}
                 <div class=" pb-3 px-3 d-flex flex-column align-items-center justify-content-center">
                     <img src="https://secure.gravatar.com/avatar/831e13113da4879999ee5d5e0d2a9435.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png"
-                         class="rounded-circle  border border-primary launch-story" data-caption="{{story['user_entry']}}" data-username="{{story['user_name']}}" data-story="../static/user-uploads/{{story['story_image']}}" data-toggle="modal"
+                         class="rounded-circle  launch-story" data-caption="{{story['user_entry']}}" data-username="{{story['user_name']}}" data-story="../static/user-uploads/{{story['story_image']}}" data-toggle="modal"
                          data-target="#ShowStoryModal" alt="50x50" style="width:55px; height:50px;">
                     <h6 class="fs-16 pt-2 text-dark font-weight-bold" data-toggle="modal" data-caption="{{story['user_entry']}}" data-username="{{story['user_name']}}" data-story="../static/user-uploads/{{story['story_image']}}"
                         data-target="#ShowStoryModal">{{story['user_name']}}</h6>
@@ -436,7 +436,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary" style="background-color:#F29730;">Save changes</button>
                     </div>
                 </form>
             </div>
