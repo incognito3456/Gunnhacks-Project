@@ -227,8 +227,7 @@ def settings():
         db.register.update_one({'email':session['user-info']['email']}, {'$set': {'first-name': firstName,'last-name': lastName,'bio':bio}},upsert=True)
         found = db.register.find_one({'email':session['user-info']['email']})
         session['user-info'] = {'firstName': found['first-name'], 'lastName': found['last-name'],
-                                'email': found['email'], 'logintime': datetime.utcnow(), 'groups': found['groups'],
-                                'friends': found['friends'], 'bio':found['bio']}
+                                'email': found['email'], 'logintime': datetime.utcnow(), 'bio':found['bio']}
         return redirect('/dashboard')
 
 @app.route('/test', methods=['GET', 'POST'])
