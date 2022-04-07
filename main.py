@@ -2,27 +2,35 @@ from flask import *
 from flask_moment import Moment
 from datetime import datetime
 from werkzeug.utils import secure_filename
+import os
 from os import path
 import random
-
 app = Flask(__name__)
 import pymongo
 from bson.objectid import ObjectId
-connection_file=open("connection_string.txt",'r')
-content=connection_file.read().strip()
-connection_string = content
-connection_file.close()
+if os.environ.get("MONGO_URI")==None:
+###means it's on this computer
+    connection_file = open("connection_string.txt", 'r')
+    content = connection_file.read().strip()
+    connection_string = content
+    connection_file.close()
+else:
+###means it's on heroku
+    connection_string=os.environ.get("MONGO_URI")
+
 client = pymongo.MongoClient(connection_string)
 #db = client["social-media"]
 db = client["gunnhacks"]
-secret_file=open("secretkey.txt",'r')
-key=secret_file.read().strip()
+if os.environ.get("SECRET_KEY")==None:
+    secret_file=open("secretkey.txt",'r')
+    key=secret_file.read().strip()
+    secret_file.close()
+else:
+    key=os.environ.get("SECRET_KEY")
+
 app.secret_key = key
-secret_file.close()
 app.upload_folder = 'static/user-uploads'
 moment = Moment(app)
-
-
 
 @app.route('/', methods=['GET', 'POST'])
 def register():
