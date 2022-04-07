@@ -1,0 +1,299 @@
+{% extends 'layout.html' %}
+{% block title %}
+<title>Dashboard</title>
+{% endblock %}
+{% block head %}
+{{super()}}
+{{moment.include_moment()}}
+{% endblock %}
+
+{% block content %}
+<style>
+   .left-division{
+       background-size:100%;
+       background-image: linear-gradient(#f78a57, #fcaa4e);
+       vertical-align: top;
+       min-height: 100%;
+       height:400px;
+
+   }
+   .middle-division{
+       background-size:100%;
+       background-image: url('../static/sunset.png');
+       vertical-align: top;
+       min-height: 100%;
+       height:400px;
+   }
+   .right-division{
+       background-size:100%;
+
+       background-image: linear-gradient(#f78a57, #fcaa4e);
+       vertical-align: top;
+       min-height: 100%;
+       height:400px;
+
+   }
+   .search-bar{
+       background-color: #A7CBF1;
+       /*width:200px;*/
+       height:40px;
+       border-radius:5px;
+
+   }
+   .comment-label{
+       background-color: #f7a84a;
+   }
+   .add-comment{
+       background-color: #fcb895;
+   }
+   .comment-box{
+       background-color: #fce0c0;
+   }
+   .big-post-bg{
+       background-color: #fcd097;
+       opacity:.93;
+   }
+   input:focus{
+       background-color: #f79463  !important;
+   }
+   .navigation{
+       background-color: #FCCA8F;
+
+   }
+   .navigation-selection{
+       background-color: #f7a84a;
+   }
+   .material-icons.md-24 { font-size: 24px; }
+   .fs-15{
+       font-size:15px;
+   }
+   .fs-16{
+       font-size:16px;
+   }
+   .fs-20{
+       font-size:20px;
+   }
+   .light-gray-text{
+       color:#8b95a6;
+   }
+   .periwinkle-text{
+       color:#739dc9;
+   }
+   .navy-blue-text{
+       color:#4a6287;
+   }
+   .dropdown-toggle::after {
+       border:0;
+   }
+
+
+
+</style>
+
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <div class="col-0 col-md-3  h-100 left-division ">
+            <!--            <div class="search-bar mx-3 mb-2 mt-3 row justify-content-right pr-4">-->
+            <!--                &lt;!&ndash;                <i class="fa fa-search fa-lg mr-2 ml-2" style="line-height:1.75; border-radius:5px;"></i>&ndash;&gt;-->
+            <!--                <span class="material-icons mr-1 ml-2" style="line-height:1.75;">search</span>-->
+            <!--                <h6 class="text-dark pl-1 pr-2 pt-2 pb-2 mb-0 " style="line-height:1.75; border-radius:5px;">Search</h6>-->
+            <!--            </div>-->
+            <!--           <img src="../static/unknown.png"-->
+            <!--                    class=" img-fluid justify-content-center mt-2 ml-2" alt="50x50" style="width:280px; height:90px;">-->
+            <form action="/search_results" method="GET">
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control add-comment" placeholder="Search"
+                           aria-label="Recipient's username" name="search_bar" aria-describedby="basic-addon2">
+                    <div class="input-group-append ">
+                        <button type="submit" style="border-width:0px; background-color:#fcb895;">
+                       <span class="input-group-text " id="basic-addon2"><i
+                               class="fa fa-search fa-lg  mb-0 " style="color:#F68A56;"></i></span>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+            {% block search_results %}
+            {% endblock %}
+
+            <h5 class="p-3 text-secondary">Your Groups</h5>
+            {% for group in session['user-info']['groups'] %}
+            <div class="pl-3 pb-3 d-flex">
+                <img src="https://images.unsplash.com/photo-1594882471743-2758d2ce5f00?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG90dXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                     class="rounded-circle img-fluid " alt="50x50" style="width:55px; height:50px;">
+                <h6 class="fs-15 pl-3 pt-3 text-dark font-weight-bold">Yoga Community</h6>
+            </div>
+            {% else %}
+            <h6 class="fs-15 pl-3 mb-3 text-dark font-weight-bold">No groups found</h6>
+            {% endfor %}
+            <h5 class="p-3 text-secondary">Your Friends</h5>
+            {% for group in session['user-info']['friends'] %}
+            <div class="pl-3 pb-3 d-flex align-items-center justify-content-between">
+                <div class="d-flex">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                         class="rounded-circle img-fluid" alt="50x50" style="width:55px; height:50px;">
+                    <h6 class="fs-15 pl-3 pt-3 pr-5 text-dark font-weight-bold">Nancy</h6>
+                </div>
+                <div class="row justify-content-right pr-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6o6T_z7S3Hqkwx96hCGkY5iZR1VbeHc2772U2SMhQOKnLZBp0WeRkVTfXr0GSvenXAQU&usqp=CAU"
+                         class="rounded-circle active " alt="50x50" style="width:15px; height:15px;">
+                </div>
+            </div>
+            {% else %}
+            <h6 class="fs-15 pl-3 mb-3 text-dark font-weight-bold">No friends found</h6>
+            {% endfor %}
+
+
+        </div>
+
+        <div class="col-0 col-md-6  h-100 middle-division">
+            <div class="square square-lg navigation row justify-content-center mb-4 mt-2 mx-5"
+                 style=" border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-right-radius:10px; border-bottom-left-radius:10px;">
+                <div class=" py-0 px-2 " style=" width:100%; ">
+                    <div class="d-flex align-items-center pt-3 justify-content-center mb-3">
+                        <div class="square square-lg navigation-selection mr-3 p-0"
+                             style="width:auto; border-radius:10px;">
+                            <!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <span class="material-icons m-2 md-light md-24" style=" color:#ffffff;">home</span>
+                        </div>
+                        <div class="square square-lg  mr-3 p-0" style="width:auto; border-radius:10px;">
+                            <!--                            <i class="fa fa-home fa-lg m-2" style="color:#8b95a6;"></i>-->
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle pl-3 pr-3 text-dark font-weight-bold"
+                                        type="button"
+                                        id="dropdownMenu2"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="material-icons m-2 md-light md-24" style=" color:#8b95a6;">add</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item text-break" type="button" data-toggle="modal"
+                                            data-target="#PostModal">Create Post
+                                    </button>
+                                    <button class="dropdown-item text-break" type="button" data-toggle="modal"
+                                            data-target="#StoryModal">Create Story
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="square square-lg  mr-3 p-0" style="width:auto; border-radius:10px;">
+
+                            <span class="material-icons m-2 md-dark md-24" style=" color:#8b95a6;">settings</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="d-flex " style=" overflow-x:scroll;">
+
+            </div>
+            <div class="justify-content-center" style="overflow:scroll;height:calc(-225px + 100vh);">
+
+            </div>
+        </div>
+
+        <div class="col-0 col-md-3 h-100 right-division">
+
+            <!--                <i class="fa fa-bell fa-lg "></i>-->
+            <div class="d-flex align-items-center pt-3 justify-content-end mb-3">
+                <i class="fa fa-bell fa-lg mr-0"></i>
+
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle pl-3 pr-3 text-dark font-weight-bold" type="button"
+                            id="dropdownMenu2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{session['user-info']['firstName']}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item text-break" type="button">My Profile</button>
+                        <button class="dropdown-item text-break" type="button">Settings</button>
+                        <a href="/logout">
+                            <button class="dropdown-item text-break" type="button">Logout</button>
+                        </a>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                     class="rounded-circle img-fluid" alt="50x50" style="width:45px; height:40px;">
+            </div>
+
+            <div class="" style="position:relative;">
+                {% if session['selected_post']!='' %}
+
+                <div class="square square-lg mb-2">
+                    <img src="../static/user-uploads/{{session['selected_post']['post_image']}}"
+                         class="w-h-50" alt="..." style="width:320px; height:300px; border-radius:10px;">
+                </div>
+                <div class="mt-1 py-1 px-2 " style="position:absolute; bottom:280px; width:100%; ">
+                    <!--                    <i class="fa fa-bell fa-lg mr-2"></i>-->
+                    <div class="comment-label py-2 d-flex align-items-center" style="border-radius:7px;">
+                        <i class="fa fa-comment fa-lg mr-2 pl-3 mb-0" style="color:white;"></i>
+                        <div class="text-light pl-0 mb-0">Comments</div>
+
+                    </div>
+                </div>
+                <div>
+                    <div class="square square-lg bg-light pt-3"
+                         style="backwidth:320px; height:250px; border-top-left-radius:10px; border-top-right-radius:10px; border-bottom-right-radius:0px; border-bottom-left-radius:0px; overflow:scroll;">
+                        <!--                <img src="https://t3.ftcdn.net/jpg/03/76/44/02/360_F_376440225_QjOu6mr0qX0bT271GstBYRKfXtwt6jnM.jpg" class="w-h-50" alt="..." style="width:320px; height:250px; border-radius:10px;">-->
+                        {% for comment in session['selected_post']['comments'] %}
+                        <div class="comment-box p-2 mx-auto mt-2" style="border-radius:7px; width:80%;">
+                            <div class="pl-2 pb-2 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                                         class="rounded-circle img-fluid" alt="50x50" style="width:35px; height:30px;">
+                                    <div>
+                                        <h6 class="fs-16 pl-2 mb-0 text-dark font-weight-bold">
+                                            {{comment['comment_name']}}</h6>
+                                        <h6 class=" pl-2 mb-0 "><small>{{moment(comment['comment_time']).fromNow(refresh=True)}}</small>
+                                        </h6>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <h6 class="pl-5 pr-2">{{comment['comment_text']}}</h6>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="square square-lg bg-light "
+                         style="width:320px; border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-right-radius:10px; border-bottom-left-radius:10px;">
+                        <!--                        <div class=" py-1 px-2 " style=" width:100%; ">-->
+                        <!--                            <form action="/comments" method="POST" class=" py-1 px-2 " style=" width:100%; ">-->
+                        <form action="/comments/{{ session['selected_post']['_id'] }}" method="POST" class=" py-1 px-2 "
+                              style=" width:100%; ">
+                            <div class="input-group">
+                                <input name="comment" id="comment" type="text" class="form-control add-comment"
+                                       placeholder="Add a Comment"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append ">
+                                    <button type="submit" class="input-group-text " id="basic-addon2"><i
+                                            class="fa fa-send fa-lg  mb-0 " style="color:#F68A56;"></i></button>
+                                </div>
+
+                            </div>
+                        </form>
+                        <!--                        </div>-->
+                    </div>
+                </div>
+
+                {% else %}
+                <h6 class=" fs-15 pl-3 mb-3 text-center text-dark font-weight-bold">No posts found</h6>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+

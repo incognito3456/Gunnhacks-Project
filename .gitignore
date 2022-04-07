@@ -1,2 +1,6 @@
 # Project exclude paths
 /venv/
+.idea/
+__pycache__/
+connection_string.txt
+secretkey.txt

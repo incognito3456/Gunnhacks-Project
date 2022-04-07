@@ -8,6 +8,6 @@
 }
 </style>
 {% for person in found_people %}
-<h6 class="m-3 text-secondary font-italic"><a href="/profile">{{person['first-name']}} {{person['last-name']}}</a></h6>
+<h6 class="m-3 text-secondary font-italic"><a href="/profile?firstname={{person['first-name']}}">{{person['first-name']}} {{person['last-name']}}</a></h6>
 {% endfor %}
 {% endblock %}

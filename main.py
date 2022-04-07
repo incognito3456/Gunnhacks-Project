@@ -8,15 +8,20 @@ import random
 app = Flask(__name__)
 import pymongo
 from bson.objectid import ObjectId
-
-connection = "mongodb+srv://tvisha_r:Tvisha2006@cluster0.kwpmn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE"
-client = pymongo.MongoClient(connection)
+connection_file=open("connection_string.txt",'r')
+content=connection_file.read().strip()
+connection_string = content
+connection_file.close()
+client = pymongo.MongoClient(connection_string)
 #db = client["social-media"]
 db = client["gunnhacks"]
-app.debug = True
-app.secret_key = 'sdfsdfs'
-app.upload_folder = '/Users/tvisharanjan/PycharmProjects/social-media/static/user-uploads'
+secret_file=open("secretkey.txt",'r')
+key=secret_file.read().strip()
+app.secret_key = key
+secret_file.close()
+app.upload_folder = 'static/user-uploads'
 moment = Moment(app)
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -69,20 +74,20 @@ def default_dashboard():
 @app.route('/dashboard/<post_id>', methods=['GET', 'POST'])
 def dashboard(post_id):
     if request.method == 'GET':
-        print(session)
         if 'user-info' not in session:
             flash('You need to be logged in to view this route', 'danger')
             return redirect('/login')
         posts = list(db.post.find().sort('time', -1))
-        print(posts)
         stories = list(db.story.find().sort('time', -1))
+        print(stories)
         if len(post_id) != 24:
             return abort(404)
         found = db.post.find_one({'_id': ObjectId(post_id)})
+        usernames = db.register.find({},{'first-name':1,'_id':1})
         found['_id']=str(found['_id'])
         session['selected_post']=found
-
-        return render_template('dashboard.html', posts=posts, stories=stories)
+        all_stories=[]
+        return render_template('dashboard.html', posts=posts, stories=stories, usernames=usernames)
     else:
         information = {'user_email': session['user-info']['email'], 'time': datetime.utcnow(),
                        'user_entry': request.form['content']}
@@ -104,7 +109,17 @@ def search_results():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        return render_template('profile.html')
+        firstname=request.args.get("firstname")
+        all_posts_by_selected_user = db.post.find({'user_name': firstname})
+        all_posts_by_selected_user_list=[]
+        total_num_of_comments=0
+        for each_post in all_posts_by_selected_user:
+            all_posts_by_selected_user_list.append(each_post)
+            total_num_of_comments+=len(each_post['comments'])
+        total_num_of_posts=len(all_posts_by_selected_user_list)
+        record=db.register.find_one({'first-name':firstname})
+        comments = db.register.find_one({'first-name': firstname})
+        return render_template('profile.html', record=record,total_num_of_comments=total_num_of_comments,total_num_of_posts=total_num_of_posts)
 
 
 
@@ -174,13 +189,13 @@ def like_post(like):
 
 @app.route('/comments/<post_id>', methods=['POST'])
 def comments(post_id):
-    found = db.post.find_one({'_id': ObjectId(post_id)})
+    # found = db.post.find_one({'_id': ObjectId(post_id)})
     user_comment = {'comment_name': session['user-info']['firstName'],
                     'comment_time': datetime.utcnow(),
                     'comment_text': request.form['comment']}
 
     db.post.update_one({'_id': ObjectId(post_id)}, {'$push': {'comments':user_comment}})
-
+    print(user_comment)
     return redirect('/dashboard' + '/' + post_id)
 
 
@@ -191,12 +206,28 @@ def delete(id):
         db.entry.delete_one(document)
         return redirect('/dashboard')
 
-@app.route('/change_profile_pic', methods=['GET', 'POST'])
-def change_profile_pic():
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
     if request.method == 'GET':
 
         return render_template('settings.html')
+    else:
+        firstName=request.form['first_name']
+        lastName = request.form['last_name']
+        bio = request.form['bio']
+        print(firstName, lastName, bio)
+        db.register.update_one({'email':session['user-info']['email']}, {'$set': {'first-name': firstName,'last-name': lastName,'bio':bio}},upsert=True)
+        found = db.register.find_one({'email':session['user-info']['email']})
+        session['user-info'] = {'firstName': found['first-name'], 'lastName': found['last-name'],
+                                'email': found['email'], 'logintime': datetime.utcnow(), 'groups': found['groups'],
+                                'friends': found['friends'], 'bio':found['bio']}
+        return redirect('/dashboard')
 
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    if request.method == 'GET':
+
+        return render_template('test.html')
 
 @app.route('/user/<name>', methods=['GET', 'POST'])
 def user_name(name):
