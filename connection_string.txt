@@ -1,1 +1,0 @@
-mongodb+srv://tvisha_r:Tvisha2006@cluster0.kwpmn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE

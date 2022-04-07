@@ -4,3 +4,4 @@
 __pycache__/
 connection_string.txt
 secretkey.txt
+.DS_Store
