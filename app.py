@@ -20,7 +20,10 @@ else:
 
 client = pymongo.MongoClient(connection_string)
 #db = client["social-media"]
-db = client["gunnhacks"]
+if os.environ.get("DATABASE_NAME")==None:
+    db = client["gunnhacks"]
+else:
+    db = client[os.environ.get("DATABASE_NAME")]
 if os.environ.get("SECRET_KEY")==None:
     secret_file=open("secretkey.txt",'r')
     key=secret_file.read().strip()
