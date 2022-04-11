@@ -224,11 +224,18 @@ def settings():
         firstName=request.form['first_name']
         lastName = request.form['last_name']
         bio = request.form['bio']
-        print(firstName, lastName, bio)
-        db.register.update_one({'email':session['user-info']['email']}, {'$set': {'first-name': firstName,'last-name': lastName,'bio':bio}},upsert=True)
+        profile_pic = request.files["profile-pic"]
+        filename = secure_filename(profile_pic.filename)
+        name_of_file = filename.split(".")
+        updated_filename = name_of_file[0] + session['user-info']['firstName'] + str(datetime.utcnow()) + "." + \
+                           name_of_file[1]
+        profile_pic.save(path.join(app.upload_folder, updated_filename))
+        db.register.update_one({'email':session['user-info']['email']}, {'$set': {'first-name': firstName,'last-name': lastName,'bio':bio,"profile_pic":updated_filename}},upsert=True)
         found = db.register.find_one({'email':session['user-info']['email']})
         session['user-info'] = {'firstName': found['first-name'], 'lastName': found['last-name'],
-                                'email': found['email'], 'logintime': datetime.utcnow(), 'bio':found['bio']}
+                                'email': found['email'], 'logintime': datetime.utcnow(), 'bio':found['bio'], "profile_pic":found['profile_pic']}
+        print("hello")
+        print(session['user-info'])
         return redirect('/dashboard')
 
 @app.route('/test', methods=['GET', 'POST'])
