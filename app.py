@@ -138,9 +138,7 @@ def profile():
 @app.route('/create_story', methods=['POST'])
 def create_story():
     if request.method == 'POST':
-        new = {'user': session['user-info']['firstName'], 'time_posted': datetime.utcnow(),
-               'story': [{'type': 'text', 'content': 'Hello!'}, {'type': 'img',
-                                                                 'content': 'https://images.unsplash.com/photo-1502759683299-cdcd6974244f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8d2FsbHBhcGVyc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'}]}
+
         file = request.files["story-image"]
         filename = secure_filename(file.filename)
         name_of_file = filename.split(".")
