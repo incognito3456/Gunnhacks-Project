@@ -96,6 +96,7 @@ def dashboard(post_id):
         posts = list(db.post.find().sort('time', -1))
         stories = list(db.story.find().sort('time', -1))
         print(stories)
+
         if len(post_id) != 24:
             return abort(404)
         found = db.post.find_one({'_id': ObjectId(post_id)})
