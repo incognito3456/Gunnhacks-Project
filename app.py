@@ -67,9 +67,14 @@ def login():
             return redirect('/login')
         else:
             flash('Login Successful!', 'success')
+            if 'profile_pic' in found:
+                profile_pic='../static/user-uploads/'+found['profile_pic']
+
+            else:
+                profile_pic="https://secure.gravatar.com/avatar/831e13113da4879999ee5d5e0d2a9435.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png"
+
             session['user-info'] = {'firstName': found['first-name'], 'lastName': found['last-name'],
-                                    'email': found['email'], 'logintime': datetime.utcnow(), 'groups': found['groups'],
-                                    'friends': found['friends']}
+                                    'email': found['email'], 'logintime': datetime.utcnow(), "profile_pic":profile_pic}
             return redirect('/dashboard')
 
 
@@ -101,7 +106,7 @@ def dashboard(post_id):
         return render_template('dashboard.html', posts=posts, stories=stories, usernames=usernames)
     else:
         information = {'user_email': session['user-info']['email'], 'time': datetime.utcnow(),
-                       'user_entry': request.form['content']}
+                       'user_entry': request.form['content'],'profile_pic':session['user-info']['profile_pic']}
         db.entry.insert_one(information)
         return redirect('/dashboard')
 
@@ -224,7 +229,7 @@ def settings():
         firstName=request.form['first_name']
         lastName = request.form['last_name']
         bio = request.form['bio']
-        profile_pic = request.files["profile-pic"]
+        profile_pic = request.files["profile_pic"]
         filename = secure_filename(profile_pic.filename)
         name_of_file = filename.split(".")
         updated_filename = name_of_file[0] + session['user-info']['firstName'] + str(datetime.utcnow()) + "." + \
@@ -233,7 +238,7 @@ def settings():
         db.register.update_one({'email':session['user-info']['email']}, {'$set': {'first-name': firstName,'last-name': lastName,'bio':bio,"profile_pic":updated_filename}},upsert=True)
         found = db.register.find_one({'email':session['user-info']['email']})
         session['user-info'] = {'firstName': found['first-name'], 'lastName': found['last-name'],
-                                'email': found['email'], 'logintime': datetime.utcnow(), 'bio':found['bio'], "profile_pic":found['profile_pic']}
+                                'email': found['email'], 'logintime': datetime.utcnow(), 'bio':found['bio'], "profile_pic":'../static/user-uploads/'+found['profile_pic']}
         print("hello")
         print(session['user-info'])
         return redirect('/dashboard')

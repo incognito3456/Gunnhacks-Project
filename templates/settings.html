@@ -245,7 +245,7 @@
 
                     </div>
                     <div class="input-group mt-1 mb-2">
-                        <input name="profile-pic" type="file" class="form-control settings-input" id="profile-pic" required="" style="border-radius:10px;width:535px;">
+                        <input name="profile_pic" type="file" class="form-control settings-input" id="profile_pic" required="" style="border-radius:10px;width:535px;">
                         <div class="input-group-append ">
 
                         </div>
@@ -290,7 +290,7 @@
                         </a>
                     </div>
                 </div>
-                <img src="../static/user-uploads/{{session['user-info']['profile_pic']}}"
+                <img src="{{session['user-info']['profile_pic']}}"
                      class="rounded-circle img-fluid" alt="50x50" style="width:45px; height:40px;">
             </div>
 
