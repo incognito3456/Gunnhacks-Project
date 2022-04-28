@@ -95,15 +95,33 @@ def dashboard(post_id):
             return redirect('/login')
         posts = list(db.post.find().sort('time', -1))
         stories = list(db.story.find().sort('time', -1))
-        print(stories)
-
+        print(posts)
+        print(len(posts))
+        for post in posts:
+            print(post['user_email'])
+            record_of_persons_post=db.register.find_one({'email':post['user_email']})
+            print(record_of_persons_post)
+            if "profile_pic" in record_of_persons_post:
+                profile_pic='../static/user-uploads/' + record_of_persons_post['profile_pic']
+            else:
+                profile_pic="https://secure.gravatar.com/avatar/831e13113da4879999ee5d5e0d2a9435.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png"
+            post['profile_pic']=profile_pic
+        for story in stories:
+            print(story['user_email'])
+            record_of_persons_story=db.register.find_one({'email':story['user_email']})
+            print(record_of_persons_story)
+            if "profile_pic" in record_of_persons_story:
+                story_profile_pic='../static/user-uploads/' + record_of_persons_story['profile_pic']
+            else:
+                story_profile_pic="https://secure.gravatar.com/avatar/831e13113da4879999ee5d5e0d2a9435.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png"
+            story['profile_pic']=story_profile_pic
         if len(post_id) != 24:
             return abort(404)
         found = db.post.find_one({'_id': ObjectId(post_id)})
         usernames = db.register.find({},{'first-name':1,'_id':1})
         found['_id']=str(found['_id'])
         session['selected_post']=found
-        all_stories=[]
+
         return render_template('dashboard.html', posts=posts, stories=stories, usernames=usernames)
     else:
         information = {'user_email': session['user-info']['email'], 'time': datetime.utcnow(),
@@ -177,7 +195,10 @@ def create_post():
                        'user_caption': request.form['post-text-caption'], "post_image": updated_filename,
                        "liked_by": [],
                        'comments': []}
+        # email_post=information['user_email']
+        # print(email_post)
         db.post.insert_one(information)
+        # db.register.find_one({'email':email_post})
         return redirect('/dashboard')
 
 
