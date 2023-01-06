@@ -107,7 +107,7 @@ def dashboard(post_id):
                 profile_pic="https://secure.gravatar.com/avatar/831e13113da4879999ee5d5e0d2a9435.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png"
             post['profile_pic']=profile_pic
         for story in stories:
-            print(story['user_email'])
+
             record_of_persons_story=db.register.find_one({'email':story['user_email']})
             print(record_of_persons_story)
             if "profile_pic" in record_of_persons_story:
@@ -153,8 +153,12 @@ def profile():
             total_num_of_comments+=len(each_post['comments'])
         total_num_of_posts=len(all_posts_by_selected_user_list)
         record=db.register.find_one({'first-name':firstname})
+        if "profile_pic" in record:
+            profile_pic = '../static/user-uploads/' + record['profile_pic']
+        else:
+            profile_pic = "https://secure.gravatar.com/avatar/831e13113da4879999ee5d5e0d2a9435.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png"
         comments = db.register.find_one({'first-name': firstname})
-        return render_template('profile.html', record=record,total_num_of_comments=total_num_of_comments,total_num_of_posts=total_num_of_posts)
+        return render_template('profile.html', profile_pic=profile_pic, record=record,total_num_of_comments=total_num_of_comments,total_num_of_posts=total_num_of_posts)
 
 
 

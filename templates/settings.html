@@ -124,32 +124,6 @@
             {% block search_results %}
             {% endblock %}
 
-            <h5 class="p-3 text-secondary">Your Groups</h5>
-            {% for group in session['user-info']['groups'] %}
-            <div class="pl-3 pb-3 d-flex">
-                <img src="https://images.unsplash.com/photo-1594882471743-2758d2ce5f00?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG90dXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-                     class="rounded-circle img-fluid " alt="50x50" style="width:55px; height:50px;">
-                <h6 class="fs-15 pl-3 pt-3 text-dark font-weight-bold">Yoga Community</h6>
-            </div>
-            {% else %}
-            <h6 class="fs-15 pl-3 mb-3 text-dark font-weight-bold">No groups found</h6>
-            {% endfor %}
-            <h5 class="p-3 text-secondary">Your Friends</h5>
-            {% for group in session['user-info']['friends'] %}
-            <div class="pl-3 pb-3 d-flex align-items-center justify-content-between">
-                <div class="d-flex">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-                         class="rounded-circle img-fluid" alt="50x50" style="width:55px; height:50px;">
-                    <h6 class="fs-15 pl-3 pt-3 pr-5 text-dark font-weight-bold">Nancy</h6>
-                </div>
-                <div class="row justify-content-right pr-4">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6o6T_z7S3Hqkwx96hCGkY5iZR1VbeHc2772U2SMhQOKnLZBp0WeRkVTfXr0GSvenXAQU&usqp=CAU"
-                         class="rounded-circle active " alt="50x50" style="width:15px; height:15px;">
-                </div>
-            </div>
-            {% else %}
-            <h6 class="fs-15 pl-3 mb-3 text-dark font-weight-bold">No friends found</h6>
-            {% endfor %}
 
 
         </div>
@@ -283,8 +257,7 @@
                         {{session['user-info']['firstName']}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item text-break" type="button">My Profile</button>
-                        <button class="dropdown-item text-break" type="button">Settings</button>
+                        
                         <a href="/logout">
                             <button class="dropdown-item text-break" type="button">Logout</button>
                         </a>
@@ -305,7 +278,7 @@
                     <!--                    <i class="fa fa-bell fa-lg mr-2"></i>-->
                     <div class="comment-label py-2 d-flex align-items-center" style="border-radius:7px;">
                         <span class="material-icons mt-1 mb-1 mr-2 ml-3 md-dark md-24"
-                                          style="color:#FFFFFF;">comment</span>
+                                          style="color:#FFFFFF;">tool</span>
                         <div class="text-light pl-0 mb-0">Comments</div>
 
                     </div>
